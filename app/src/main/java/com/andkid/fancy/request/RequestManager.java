@@ -6,12 +6,11 @@ package com.andkid.fancy.request;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 
-import com.andkid.fancy.FancyContext;
 import com.andkid.fancy.newloader.LifeCycleCallback;
 import com.andkid.fancy.util.Util;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -32,7 +31,6 @@ public class RequestManager implements LifeCycleCallback {
     }
 
     public void runRequest(Request request) {
-        FancyContext.requestDispatcher.add(request);
         addRequest(request);
         request.begin();
     }
@@ -69,9 +67,10 @@ public class RequestManager implements LifeCycleCallback {
         return isPaused;
     }
 
-    public RequestBuilder<Drawable> from(String url) {
-        return asDrawable().from(url);
-    }
+    //TODO 为图片加载特别开一个接口，以省略asDrawable调用
+//    public RequestBuilder<Drawable> from(String url) {
+//        return asDrawable().from(url);
+//    }
 
     public RequestBuilder<Drawable> asDrawable() {
         return as(Drawable.class);
@@ -85,12 +84,13 @@ public class RequestManager implements LifeCycleCallback {
         return as(GifDrawable.class);
     }
 
-    public RequestBuilder<File> asFile() {
-        return as(File.class);
+    public <ResourceType> RequestBuilder<ResourceType> as(Class<ResourceType> resourceClass) {
+        //TODO 后续扩展不仅仅支持图片(任何异步加载数据)，可根据ResourceType生成不同的RequestBuilder子类，以提供不同的接口
+        return new RequestBuilder<>(this, resourceClass);
     }
 
-    public <ResourceType> RequestBuilder<ResourceType> as(Class<ResourceType> resourceClass) {
-        return new RequestBuilder<>(this, resourceClass);
+    public void clear(ImageView imageView) {
+
     }
 
     @Override

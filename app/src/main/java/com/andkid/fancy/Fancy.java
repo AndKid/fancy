@@ -1,9 +1,7 @@
 package com.andkid.fancy;
 
 import android.content.Context;
-import android.view.View;
 
-import com.andkid.fancy.request.Request;
 import com.andkid.fancy.request.RequestManager;
 
 import java.util.HashMap;
@@ -14,7 +12,7 @@ import java.util.Map;
  */
 
 public class Fancy {
-    private static Fancy fancy;
+    private static volatile Fancy fancy;
     private FancyContext fancyContext;
     private Map<Context, RequestManager> managers = new HashMap<>();
 
@@ -33,10 +31,6 @@ public class Fancy {
         return fancy;
     }
 
-    public FancyContext getContext() {
-        return fancyContext;
-    }
-
     public static RequestManager with(Context context) {
         RequestManager manager = getRequestManager(context);
         if (manager == null) {
@@ -44,13 +38,6 @@ public class Fancy {
             addRequestManager(context, manager);
         }
         return manager;
-    }
-
-    public static void clear(View view) {
-        Object request = view.getTag();
-        if (request != null && request instanceof Request) {
-            getRequestManager(view.getContext()).removeRequest((Request) request);
-        }
     }
 
     public static RequestManager getRequestManager(Context context) {

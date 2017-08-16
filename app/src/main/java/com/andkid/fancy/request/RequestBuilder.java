@@ -1,13 +1,9 @@
 package com.andkid.fancy.request;
 
-import android.net.Uri;
 import android.widget.ImageView;
 
-import com.andkid.fancy.Fancy;
 import com.andkid.fancy.request.target.ImageViewTargetFactory;
 import com.andkid.fancy.request.target.Target;
-
-import java.io.File;
 
 /**
  * Created by yuguan.chen on 2017/7/12.
@@ -30,24 +26,24 @@ public class RequestBuilder<ResourceType> {
     }
 
     //TODO 扩展以下接口
-    private RequestBuilder<ResourceType> from(File file) {
-        return this;
-    }
-
-    private RequestBuilder<ResourceType> from(Integer resourceId) {
-        return this;
-    }
-
-    private RequestBuilder<ResourceType> from(Uri uri) {
-        return this;
-    }
-
-    private RequestBuilder<ResourceType> from(Object model) {
-        return this;
-    }
+//    private RequestBuilder<ResourceType> from(File file) {
+//        return this;
+//    }
+//
+//    private RequestBuilder<ResourceType> from(Integer resourceId) {
+//        return this;
+//    }
+//
+//    private RequestBuilder<ResourceType> from(Uri uri) {
+//        return this;
+//    }
+//
+//    private RequestBuilder<ResourceType> from(Object model) {
+//        return this;
+//    }
 
     /**
-     * 缓存策略
+     * 磁盘缓存策略
      * @return
      */
     public RequestBuilder<ResourceType> diskCacheStrategy() {
@@ -68,7 +64,7 @@ public class RequestBuilder<ResourceType> {
      * @return
      */
     public RequestBuilder<ResourceType> placeholder(int resId) {
-        request.crossFade = true;
+        request.placeholder = resId;
         return this;
     }
 
@@ -123,7 +119,7 @@ public class RequestBuilder<ResourceType> {
      * @return
      */
     public void load() {
-        into(Request.NO_TARGET);
+        requestManager.runRequest(request);
     }
 
     /**
@@ -140,7 +136,7 @@ public class RequestBuilder<ResourceType> {
      * @return
      */
     public void into(ImageView imageView) {
-        Fancy.clear(imageView);
+        requestManager.clear(imageView);
         into(ImageViewTargetFactory.buildTarget(imageView, resourceType));
     }
 
