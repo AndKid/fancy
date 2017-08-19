@@ -1,4 +1,4 @@
-package com.andkid.fancy.request.target;
+package com.andkid.fancy.target;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

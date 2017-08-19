@@ -2,8 +2,8 @@ package com.andkid.fancy.request;
 
 import android.widget.ImageView;
 
-import com.andkid.fancy.request.target.ImageViewTargetFactory;
-import com.andkid.fancy.request.target.Target;
+import com.andkid.fancy.target.ImageViewTargetFactory;
+import com.andkid.fancy.target.Target;
 
 /**
  * Created by yuguan.chen on 2017/7/12.

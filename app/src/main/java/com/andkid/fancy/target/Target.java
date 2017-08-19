@@ -1,4 +1,4 @@
-package com.andkid.fancy.request.target;
+package com.andkid.fancy.target;
 
 /**
  * Created by yuguan.chen on 2017/7/14.

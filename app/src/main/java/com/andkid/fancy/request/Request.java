@@ -2,8 +2,8 @@ package com.andkid.fancy.request;
 
 import com.andkid.fancy.loader.RequestUnit;
 import com.andkid.fancy.loader.ResourceCallback;
-import com.andkid.fancy.request.target.NoTarget;
-import com.andkid.fancy.request.target.Target;
+import com.andkid.fancy.target.NoTarget;
+import com.andkid.fancy.target.Target;
 import com.andkid.fancy.resource.Resource;
 
 /**
