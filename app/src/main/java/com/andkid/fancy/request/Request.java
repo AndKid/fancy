@@ -10,7 +10,7 @@ import com.andkid.fancy.target.Target;
  * Created by yuguan.chen on 2017/7/12.
  */
 
-public class Request implements ResourceCallback {
+public class Request<R> implements ResourceCallback {
 
     private enum Status {
         /**
@@ -50,12 +50,13 @@ public class Request implements ResourceCallback {
     public static NoTarget NO_TARGET = new NoTarget();
 
     private Status status;
-    private Target<Resource<?>> target = NO_TARGET;
+    private Target<Resource<R>> target = NO_TARGET;
     public String url;
     public RequestListener listener;
     public boolean crossFade;
     public boolean fitBounds;
     public boolean skipMemoryCache;
+    public boolean skipDiskCache;
     public int placeholder;
     public int ratio;
     public int width;
@@ -99,9 +100,11 @@ public class Request implements ResourceCallback {
     }
 
     @Override
-    public void onResourceReady(Resource resource, DataSource dataSource) {
+    public void onResourceReady(Resource<?> resource, DataSource dataSource) {
         listener.onResourceReady(resource);
-        target.setResource(resource);
+        if (resource !=null) {
+            target.setResource((Resource<R>) resource);
+        }
     }
 
     @Override
@@ -109,7 +112,7 @@ public class Request implements ResourceCallback {
 
     }
 
-    public void setTarget(Target<Resource<?>> target) {
+    public void setTarget(Target<Resource<R>> target) {
         if (target == null) {
             this.target = NO_TARGET;
         } else {

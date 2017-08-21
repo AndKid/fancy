@@ -17,9 +17,6 @@
 package com.andkid.fancy.cache;
 
 import android.os.SystemClock;
-
-import com.andkid.fancy.newloader.FanliImageLog;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.EOFException;
@@ -112,7 +109,7 @@ public class DiskBasedCache implements Cache {
         }
         mEntries.clear();
         mTotalSize = 0;
-        FanliImageLog.d("Cache cleared.");
+//        FanliImageLog.d("Cache cleared.");
     }
 
     /**
@@ -134,11 +131,11 @@ public class DiskBasedCache implements Cache {
             byte[] data = streamToBytes(cis, (int) (file.length() - cis.bytesRead));
             return entry.toCacheEntry(data);
         } catch (IOException e) {
-            FanliImageLog.d("%s: %s", file.getAbsolutePath(), e.toString());
+//            FanliImageLog.d("%s: %s", file.getAbsolutePath(), e.toString());
             remove(key);
             return null;
         } catch (NegativeArraySizeException e) {
-            FanliImageLog.d("%s: %s", file.getAbsolutePath(), e.toString());
+//            FanliImageLog.d("%s: %s", file.getAbsolutePath(), e.toString());
             remove(key);
             return null;
         } finally {
@@ -160,7 +157,7 @@ public class DiskBasedCache implements Cache {
     public synchronized void initialize() {
         if (!mRootDirectory.exists()) {
             if (!mRootDirectory.mkdirs()) {
-                FanliImageLog.e("Unable to create cache dir %s", mRootDirectory.getAbsolutePath());
+//                FanliImageLog.e("Unable to create cache dir %s", mRootDirectory.getAbsolutePath());
             }
             return;
         }
@@ -223,7 +220,7 @@ public class DiskBasedCache implements Cache {
             boolean success = e.writeHeader(fos);
             if (!success) {
                 fos.close();
-                FanliImageLog.d("Failed to write header for %s", file.getAbsolutePath());
+//                FanliImageLog.d("Failed to write header for %s", file.getAbsolutePath());
                 throw new IOException();
             }
             fos.write(entry.data);
@@ -234,7 +231,7 @@ public class DiskBasedCache implements Cache {
         }
         boolean deleted = file.delete();
         if (!deleted) {
-            FanliImageLog.d("Could not clean up file %s", file.getAbsolutePath());
+//            FanliImageLog.d("Could not clean up file %s", file.getAbsolutePath());
         }
     }
 
@@ -246,8 +243,8 @@ public class DiskBasedCache implements Cache {
         boolean deleted = getFileForKey(key).delete();
         removeEntry(key);
         if (!deleted) {
-            FanliImageLog.d("Could not delete cache entry for key=%s, filename=%s",
-                    key, getFilenameForKey(key));
+//            FanliImageLog.d("Could not delete cache entry for key=%s, filename=%s",
+//                    key, getFilenameForKey(key));
         }
     }
 
@@ -280,9 +277,9 @@ public class DiskBasedCache implements Cache {
         if ((mTotalSize + neededSpace) < mMaxCacheSizeInBytes) {
             return;
         }
-        if (FanliImageLog.DEBUG) {
-            FanliImageLog.v("Pruning old cache entries.");
-        }
+//        if (FanliImageLog.DEBUG) {
+//            FanliImageLog.v("Pruning old cache entries.");
+//        }
 
         long before = mTotalSize;
         int prunedFiles = 0;
@@ -296,8 +293,8 @@ public class DiskBasedCache implements Cache {
             if (deleted) {
                 mTotalSize -= e.size;
             } else {
-                FanliImageLog.d("Could not delete cache entry for key=%s, filename=%s",
-                        e.key, getFilenameForKey(e.key));
+//                FanliImageLog.d("Could not delete cache entry for key=%s, filename=%s",
+//                        e.key, getFilenameForKey(e.key));
             }
             iterator.remove();
             prunedFiles++;
@@ -307,10 +304,10 @@ public class DiskBasedCache implements Cache {
             }
         }
 
-        if (FanliImageLog.DEBUG) {
-            FanliImageLog.v("pruned %d files, %d bytes, %d ms",
-                    prunedFiles, (mTotalSize - before), SystemClock.elapsedRealtime() - startTime);
-        }
+//        if (FanliImageLog.DEBUG) {
+//            FanliImageLog.v("pruned %d files, %d bytes, %d ms",
+//                    prunedFiles, (mTotalSize - before), SystemClock.elapsedRealtime() - startTime);
+//        }
     }
 
     /**
@@ -481,7 +478,7 @@ public class DiskBasedCache implements Cache {
                 os.flush();
                 return true;
             } catch (IOException e) {
-                FanliImageLog.d("%s", e.toString());
+//                FanliImageLog.d("%s", e.toString());
                 return false;
             }
         }

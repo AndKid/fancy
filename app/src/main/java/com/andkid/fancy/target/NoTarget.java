@@ -1,7 +1,5 @@
 package com.andkid.fancy.target;
 
-import com.andkid.fancy.resource.Resource;
-
 /**
  * Created by yuguan.chen on 2017/7/17.
  */
@@ -13,12 +11,12 @@ public class NoTarget implements Target {
     }
 
     @Override
-    public void setResource(Resource resource) {
+    public void setResource(Object resource) {
 
     }
 
     @Override
-    public Resource getResource() {
+    public Object getResource() {
         return null;
     }
 

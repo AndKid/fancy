@@ -25,14 +25,16 @@ public class LoadUnit implements LoadTask.LoadCallback {
     private DataSource dataSource;
     private LoadUnitListener listener;
     private List<ResourceCallback> cbs = new ArrayList<>(2);
+    private LoadKey loadKey;
 
     interface LoadUnitListener {
-        void onLoadComplete();
+        void onLoadComplete(LoadKey key);
     }
 
-    public LoadUnit(Request request, LoadUnitListener listener, ResourceCallback cb) {
+    public LoadUnit(LoadKey loadKey, Request request, LoadUnitListener listener) {
+        this.loadKey = loadKey;
         this.listener = listener;
-        cbs.add(cb);
+        cbs.add(request);
     }
 
     public void addCallback(ResourceCallback cb) {
@@ -52,14 +54,14 @@ public class LoadUnit implements LoadTask.LoadCallback {
     }
 
     private void handleSuccessOnMainThread() {
-        listener.onLoadComplete();
+        listener.onLoadComplete(loadKey);
         for (ResourceCallback cb : cbs) {
             cb.onResourceReady(resource, dataSource);
         }
     }
 
     private void handleFailureOnMainThread() {
-        listener.onLoadComplete();
+        listener.onLoadComplete(loadKey);
         for (ResourceCallback cb : cbs) {
             cb.onLoadFailed();
         }

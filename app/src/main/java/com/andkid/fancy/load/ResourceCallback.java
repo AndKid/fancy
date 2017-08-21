@@ -10,7 +10,7 @@ public interface ResourceCallback {
 
     void onLoadStart();
 
-    void onResourceReady(Resource resource, DataSource dataSource);
+    void onResourceReady(Resource<?> resource, DataSource dataSource);
 
     void onLoadFailed();
 

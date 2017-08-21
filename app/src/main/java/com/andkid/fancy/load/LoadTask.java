@@ -13,6 +13,8 @@ public class LoadTask implements Runnable {
         void onLoadFailed();
     }
 
+    
+
     @Override
     public void run() {
 

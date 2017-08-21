@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.andkid.fancy.LifeCycleCallback;
+import com.andkid.fancy.load.Loader;
 import com.andkid.fancy.util.Util;
 
 import java.util.Collections;
@@ -24,6 +25,7 @@ public class RequestManager implements LifeCycleCallback {
 
     private final Set<Request> requests =
             Collections.newSetFromMap(new WeakHashMap<Request, Boolean>());
+    private Loader loader;
     private volatile boolean isPaused;
 
     public void addRequest(Request request) {
@@ -32,7 +34,7 @@ public class RequestManager implements LifeCycleCallback {
 
     public void runRequest(Request request) {
         addRequest(request);
-        request.begin();
+        loader.load(request);
     }
 
     public void removeRequest(Request request) {

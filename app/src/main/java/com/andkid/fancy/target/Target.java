@@ -1,12 +1,10 @@
 package com.andkid.fancy.target;
 
-import com.andkid.fancy.resource.Resource;
-
 /**
  * Created by yuguan.chen on 2017/7/14.
  */
 
-public interface Target<T extends Resource<?>> {
+public interface Target<T> {
 
     void setPlaceHolder(int resId);
 

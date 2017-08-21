@@ -2,6 +2,7 @@ package com.andkid.fancy.request;
 
 import android.widget.ImageView;
 
+import com.andkid.fancy.resource.Resource;
 import com.andkid.fancy.target.ImageViewTargetFactory;
 import com.andkid.fancy.target.Target;
 
