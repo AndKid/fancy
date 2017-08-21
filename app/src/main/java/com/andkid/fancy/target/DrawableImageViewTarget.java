@@ -18,6 +18,11 @@ public class DrawableImageViewTarget extends ImageViewTarget<DrawableResource<?>
     }
 
     @Override
+    public void setPlaceHolder(int resId) {
+        imageView.setImageResource(resId);
+    }
+
+    @Override
     public void setResource(DrawableResource<?> resource) {
         drawableResource = resource;
         imageView.setImageDrawable(resource.get());

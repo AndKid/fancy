@@ -1,10 +1,10 @@
 package com.andkid.fancy.request;
 
-import com.andkid.fancy.loader.RequestUnit;
-import com.andkid.fancy.loader.ResourceCallback;
+import com.andkid.fancy.load.DataSource;
+import com.andkid.fancy.load.ResourceCallback;
+import com.andkid.fancy.resource.Resource;
 import com.andkid.fancy.target.NoTarget;
 import com.andkid.fancy.target.Target;
-import com.andkid.fancy.resource.Resource;
 
 /**
  * Created by yuguan.chen on 2017/7/12.
@@ -50,7 +50,7 @@ public class Request implements ResourceCallback {
     public static NoTarget NO_TARGET = new NoTarget();
 
     private Status status;
-    private Target<?> target = NO_TARGET;
+    private Target<Resource<?>> target = NO_TARGET;
     public String url;
     public RequestListener listener;
     public boolean crossFade;
@@ -94,8 +94,14 @@ public class Request implements ResourceCallback {
     }
 
     @Override
-    public void onResourceReady(Resource resource, RequestUnit.DataSource dataSource) {
+    public void onLoadStart() {
+        target.setPlaceHolder(placeholder);
+    }
 
+    @Override
+    public void onResourceReady(Resource resource, DataSource dataSource) {
+        listener.onResourceReady(resource);
+        target.setResource(resource);
     }
 
     @Override
@@ -103,7 +109,7 @@ public class Request implements ResourceCallback {
 
     }
 
-    public void setTarget(Target<?> target) {
+    public void setTarget(Target<Resource<?>> target) {
         if (target == null) {
             this.target = NO_TARGET;
         } else {

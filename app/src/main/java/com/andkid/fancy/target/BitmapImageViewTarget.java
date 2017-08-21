@@ -18,6 +18,11 @@ public class BitmapImageViewTarget extends ImageViewTarget<BitmapResource> {
     }
 
     @Override
+    public void setPlaceHolder(int resId) {
+        imageView.setImageResource(resId);
+    }
+
+    @Override
     public void setResource(BitmapResource resource) {
         bitmapResource = resource;
         imageView.setImageBitmap(resource.get());
